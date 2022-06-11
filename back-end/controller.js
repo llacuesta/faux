@@ -115,18 +115,57 @@ const getAllPostsByUser = (req, res) => {
                     let allPosts = []
                     posts.forEach(post => {
                         let postCopy = {
+                            authorid: user._id,
                             author: user.fname + " " + user.lname,
                             date: post.date.toDateString().substr(4, 6),
                             caption: post.caption,
                             is_edited: post.is_edited
                         }
-                        allPosts.push(postCopy)
+                        allPosts.push(postCopy);
                     });
-                    return res.send({ success: true, posts: allPosts})
+                    return res.send({ success: true, posts: allPosts});
                 }
             })
         }
     })
 }
 
-export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser }
+const searchUsers = (req, res) => {    
+    User.find({ "$or": [
+        { "fname": { "$regex": new RegExp("^" + req.body.search.toLowerCase(), "i") } }, 
+        { "lname": { "$regex": new RegExp("^" + req.body.search.toLowerCase(), "i") } }
+    ] }, (err, users) => {
+        if (err) {
+            return res.send({ success: false });
+        } else {
+            let result = []
+            users.forEach(user => {
+                console.log(user)
+                let userCopy = {
+                    id: user._id,
+                    fname: user.fname,
+                    lname: user.lname
+                }
+                result.push(userCopy)
+            })
+            return res.send({ success: true, users: result });
+        }
+    })
+}
+
+const getUserInfo = (req, res) => {
+    User.findById(req.body.id, (err, user) => {
+        if (err) {
+            return res.send({ success: false });
+        } else {
+            let userResult = {
+                fname: user.fname,
+                lname: user.lname,
+                email: user.email
+            }
+            return res.send({ success: true, user: userResult })
+        }
+    })
+}
+
+export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo }

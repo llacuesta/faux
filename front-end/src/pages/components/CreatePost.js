@@ -36,7 +36,7 @@ class CreatePost extends Component {
     render() {
         return (
             <div className="new-post">
-                <h1>Create Post</h1>
+                <p>Create Post</p>
                 <div className="fields">
                     <form>
                         <textarea id="caption" placeholder="Post something..."/>

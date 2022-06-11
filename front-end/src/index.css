@@ -10,7 +10,7 @@ body {
     background-size: cover;
     height: 650px;
     color: #171717;
-    background-color: #EEF0ED;
+    background-color: #FAFAFA;
 }
 
 .wrapper {
@@ -27,7 +27,7 @@ body {
     height: 60px;
     width: 100%;
     background-color: #171717;
-    color: #EEF0ED;
+    color: #FAFAFA;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -36,6 +36,11 @@ body {
     font-size: 40px;
     font-style: italic;
     margin-left: -168px;
+}
+
+.header a {
+    text-decoration: none;
+    color: #FAFAFA
 }
 
 /*
@@ -48,7 +53,7 @@ body {
     flex-direction: column;
     font-family: 'Joan', serif;
     background-color: #171717;
-    color: #EEF0ED;
+    color: #FAFAFA;
     height: 600px;
 }
 
@@ -102,7 +107,7 @@ body {
 .banner .form .input input {
 	width: 100%;
     outline: none;
-    border: 1px solid #EEF0ED;
+    border: 1px solid #FAFAFA;
     font-size: 15px;
 	font-family: 'Rubik', sans-serif;
     padding: 8px 10px;
@@ -118,12 +123,12 @@ body {
     font-size: 15px;
 	font-family: 'Rubik', sans-serif;
     border: 1px solid #171717;
-    background-color: #EEF0ED;
+    background-color: #FAFAFA;
 }
 
 .banner .form button:hover {
     background-color: #171717;
-    color: #EEF0ED;
+    color: #FAFAFA;
 }
 
 .banner .form .error p {
@@ -158,21 +163,22 @@ body {
     FEED
 */
 .main {
+    width: 800px;
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     gap: 20px;
     padding-top: 80px;
-    padding-left: 120px;
-    padding-right: 120px;
+    margin: auto;
 }
 
 .feed .new-post {
+    border: 1px solid #DBDBDB;
     background-color: white;
     display: grid;
-    padding: 10px;
+    padding: 15px;
 }
 
-.feed .new-post h1 {
+.feed .new-post p {
     margin: 0px;
     font-size: 15px;
     font-family: 'Rubik', sans-serif;
@@ -189,13 +195,13 @@ body {
     outline: none;
     resize: none;
     height: 100px;
-    width: 500px;
+    width: 400px;
     font-size: 25px;
     font-family: 'Rubik', sans-serif;
     padding: 10px;
     border: none;
-    border-top: 2px solid #171717;
-    border-bottom: 2px solid #171717;
+    border-top: 2px solid #DBDBDB;
+    border-bottom: 2px solid #DBDBDB;
 }
 
 .feed .new-post button {
@@ -205,14 +211,14 @@ body {
 	font-family: 'Rubik', sans-serif;
     font-size: 15px;
     border: none;
-    border-top: 2px solid #171717;
-    border-bottom: 2px solid #171717;
+    border-top: 2px solid #DBDBDB;
+    border-bottom: 2px solid #DBDBDB;
     background-color: white;
 }
 
 .feed .new-post button:hover {
     background-color: #171717;
-    color: #EEF0ED;
+    color: #FAFAFA;
     border: none;
     border-top: 2px solid #171717;
     border-bottom: 2px solid #171717;
@@ -222,13 +228,33 @@ body {
     POSTS
 */
 .posts .post {
+    margin-top: 20px;
     margin-bottom: 20px;
     font-family: 'Rubik', sans-serif;
 }
 
 .post {
+    border: 1px solid #DBDBDB;
     background-color: white;
     padding: 15px;
+
+}
+
+.post .head {
+    display: flex;
+}
+
+.post img {
+    width: 45px;
+    height: 45px;
+    vertical-align: middle;
+    margin-right: 10px;
+    border-radius: 25px;
+    padding: 0px;
+}
+
+.post .title {
+    padding-top: 2px;
 }
 
 .post .title a {
@@ -246,7 +272,7 @@ body {
     font-size: 13px;
     font-weight: 300;
     text-transform: capitalize;
-    margin-top: 3px;
+    margin-top: 5px;
 }
 
 .post .content {
@@ -257,5 +283,125 @@ body {
     USER
 */
 .user {
+    position: sticky;
+    top: 80px;
+    height: 80vh;
+    box-sizing: border-box;
+}
+
+.info {
+    margin-top: 20px;
     font-family: 'Rubik', sans-serif;
+    display: flex;
+}
+
+.info a {
+    font-size: 17px;
+    color: #171717;
+    text-decoration: none;
+}
+
+.info a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.info img {
+    width: 60px;
+    height: 60px;
+    vertical-align: middle;
+    margin-right: 20px;
+    border-radius: 30px;
+    padding: 0px;
+}
+
+.profile {
+    margin-top: 10px;
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile img {
+    width: 200px;
+    height: 200px;
+    vertical-align: middle;
+    margin-right: 10px;
+    border-radius: 100px;
+    padding: 0px;
+}
+
+.profile h1 {
+    font-family: 'Joan', serif;
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.profile h2 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 300;
+    margin: 0px;
+}
+
+/*
+    SEARCH BAR
+*/
+.search-bar {
+    display: flex;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 35px;
+    outline: none;
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+    border: 1px solid #DBDBDB;
+    padding-left: 10px;
+}
+
+.search-bar a {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    font-family: 'Rubik', sans-serif;
+    color: initial;
+    width: 50px;
+    border: 1px solid #DBDBDB;
+    border-left: none;
+    background-color: white;
+    text-align: center;
+    line-height: 36px;
+}
+
+.search-bar a:hover {
+    background-color: #171717;
+    color: #FAFAFA;
+    border: none;
+}
+
+/*
+    SEARCH RESULTS
+*/
+.search-results {
+    background-color: white;
+    border: 1px solid #DBDBDB;
+    padding: 15px;
+}
+
+.search-results h1 {
+    margin: 0px;
+    margin-bottom: 20px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 35px;
+}
+
+.search-results > .info {
+    padding-left: 20px;
+    margin: 0px;
+    margin-bottom: 15px;
 }

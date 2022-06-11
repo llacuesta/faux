@@ -4,7 +4,7 @@ class Header extends Component {
     render() {
         return (
             <div className="header">
-                <p>faux.</p>
+                <p><a href="/feed">faux.</a></p>
             </div>
         );
     }

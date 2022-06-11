@@ -1,21 +1,19 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import CreatePost from "./components/CreatePost";
-import Header from "./components/Header";
-import Post from "./components/Post";
-import SearchBar from "./components/SearchBar";
-import UserInfo from "./components/UserInfo";
-// import Cookies from "universal-cookie";
+import React, { Component } from 'react';
+import queryString from 'query-string';
+import { Redirect } from 'react-router-dom';
+import Header from './components/Header';
+import SearchBar from './components/SearchBar';
+import UserInfo from './components/UserInfo';
 
-class Feed extends React.Component {
-
+class Search extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
-            posts: [],
+            query: queryString.parse(props.location.search).search,
             checkedIfLoggedIn: false,
             isLoggedIn: null,
+            users: [],
             user: {
                 fname: localStorage.getItem("fname"),
                 lname: localStorage.getItem("lname"),
@@ -29,13 +27,13 @@ class Feed extends React.Component {
             fetch("http://localhost:3001/check-if-logged-in", {
                 method: "POST",
                 credentials: "include"
-            }), 
-            fetch("http://localhost:3001/get-all-user-posts", {
-                method: "POST",
+            }),
+            fetch('http://localhost:3001/search-users', {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id: this.state.id })
+                body: JSON.stringify({ search: this.state.query })
             })
         ])
         .then(([res1, res2]) => {
@@ -59,9 +57,11 @@ class Feed extends React.Component {
                 });
             }
 
-            if (body2.success) {
+            if (!body2.success) {
+                alert("Something went wrong!")
+            } else {
                 this.setState({
-                    posts: body2.posts
+                    users: body2.users
                 })
             }
         })
@@ -78,9 +78,13 @@ class Feed extends React.Component {
                     <div>
                         <Header />
                         <div className="main">
-                            <div className="feed">
-                                <CreatePost author={this.state.id}/>
-                                <Post data={this.state.posts}/>
+                            <div className="search-results">
+                                <h1>Results for <i>{this.state.query}</i> : </h1>
+                                {
+                                    this.state.users.map((user, i) => {
+                                        return <UserInfo key={i} id={user.id} fname={user.fname} lname={user.lname}/>
+                                    })
+                                }
                             </div>
                             <div className="user">
                                 <SearchBar />
@@ -96,4 +100,4 @@ class Feed extends React.Component {
     }
 }
 
-export default Feed
+export default Search;

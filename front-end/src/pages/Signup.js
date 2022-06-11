@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "./components/Input.js";
+import Welcome from "./components/Welcome";
 
 const validate = (states) => {
     const errors = {}
@@ -125,56 +125,79 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>User Sign Up</h1>
-                <form>
-                    <Input 
-                        id="fname"
-                        label="First Name"
-                        type="text"
-                        value={this.state.fname}
-                        changeHandler={this.changeFnameHandler}
-                        error={this.state.errors.fname}
-                    />
-                    <Input 
-                        id="lname"
-                        label="Last Name"
-                        type="text"
-                        value={this.state.lname}
-                        changeHandler={this.changeLnameHandler}
-                        error={this.state.errors.lname}
-                    />
-                    <Input 
-                        id="email"
-                        label="Email"
-                        type="email"
-                        value={this.state.email}
-                        changeHandler={this.changeEmailHandler}
-                        error={this.state.errors.email}
-                    />
-                    <Input 
-                        id="pword"
-                        label="Password"
-                        type="password"
-                        value={this.state.pword}
-                        changeHandler={this.changePwordHandler}
-                        error={this.state.errors.pword}
-                    />
-                    <Input 
-                        id="rpword"
-                        label="Repeat Password"
-                        type="password"
-                        value={this.state.rpword}
-                        changeHandler={this.changeRPwordHandler}
-                        error={this.state.errors.rpword}
-                        disabled={!this.state.pword}
-                    />
-                    <button onClick={this.signup}>Sign Up</button>
-                </form>
+            <div className="banner">
+                <Welcome />
+                <div className="form">
+                    <h1>Sign Up</h1>
+                    <form>
+                        <div className="input">
+                            <label htmlFor="fname">First Name</label>
+                            <input 
+                                id="fname"
+                                type="text"
+                                value={this.state.fname}
+                                onChange={this.changeFnameHandler}
+                            />
+                        </div>
+                        <div className="error">
+                            {this.state.errors.fname && (<p>{this.state.errors.fname}</p>)}
+                        </div>
+                        <div className="input">
+                            <label htmlFor="lname">Last Name</label>
+                            <input 
+                                id="lname"
+                                type="text"
+                                value={this.state.lname}
+                                onChange={this.changeLnameHandler}
+                            />
+                        </div>
+                        <div className="error">
+                            {this.state.errors.lname && (<p>{this.state.errors.lname}</p>)}
+                        </div>
+                        <div className="input">
+                            <label htmlFor="email">Email</label>
+                            <input 
+                                id="email"
+                                type="email"
+                                value={this.state.email}
+                                onChange={this.changeEmailHandler}
+                            />
+                        </div>
+                        <div className="error">
+                            {this.state.errors.email && (<p>{this.state.errors.email}</p>)}
+                        </div>
+                        <div className="input">
+                            <label htmlFor="pword">Password</label>
+                            <input 
+                                id="pword"
+                                type="password"
+                                value={this.state.pword}
+                                onChange={this.changePwordHandler}
+                            />
+                        </div>
+                        <div className="error">
+                            {this.state.errors.pword && (<p>{this.state.errors.pword}</p>)}
+                        </div>
+                        <div className="input">
+                            <label htmlFor="rpword">Confirm Password</label>
+                            <input 
+                                id="rpword"
+                                type="password"
+                                value={this.state.rpword}
+                                onChange={this.changeRPwordHandler}
+                                disabled={!this.state.pword}
+                            />
+                        </div>
+                        <div className="error">
+                            {this.state.errors.rpword && (<p>{this.state.errors.rpword}</p>)}
+                        </div>
+                        <button onClick={this.signup}>Sign Up</button>
+                    </form>
 
-                <p>
-                    Have an account? <a href="/log-in">Log In</a> instead.
-                </p>
+                    <p>
+                        Have an account? <a href="/log-in">Log In</a> instead.
+                    </p>
+                </div>
             </div>
         )
     }

@@ -48,10 +48,13 @@ const login = (req, res) => {
             const token = jwt.sign(tokenPayload, "CD718D6872E1A6D69F47578A41FCD");
 
             // Returning the token to the client
+            console.log(user)
             return res.send({
                 success: true,
                 token,
-                username: user.fname
+                fname: user.fname,
+                lname: user.lname,
+                id: user._id
             });
         })
     })
@@ -85,24 +88,10 @@ const checkIfLoggedIn = (req, res) => {
     )
 }
 
-    /*
-        TODO: add routers for
-            - creating new post
-            - editing post
-            - deleting post
-    */
-   /*
-    *   TODO: routers
-            - searching for user
-            - adding friends (edit user to include friends)
-            - confirm friends 
-    */
-
 const createPost = (req, res) => {
     const newPost = new Post({
-        author: res.body.author,
-        caption: res.body.caption,
-        content: res.body.content
+        author: req.body.author,
+        caption: req.body.caption
     });
 
     newPost.save((err) => {
@@ -114,4 +103,30 @@ const createPost = (req, res) => {
     })
 }
 
-export { signUp, login, checkIfLoggedIn }
+const getAllPostsByUser = (req, res) => {
+    User.findById(req.body.id, (err, user) => {
+        if (err) {
+            return res.send({ success: false });
+        } else {
+            Post.find({ author: req.body.id }, (err, posts) => {
+                if (err) {
+                    return res.send({ success: false });
+                } else {
+                    let allPosts = []
+                    posts.forEach(post => {
+                        let postCopy = {
+                            author: user.fname + " " + user.lname,
+                            date: post.date.toDateString().substr(4, 6),
+                            caption: post.caption,
+                            is_edited: post.is_edited
+                        }
+                        allPosts.push(postCopy)
+                    });
+                    return res.send({ success: true, posts: allPosts})
+                }
+            })
+        }
+    })
+}
+
+export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser }

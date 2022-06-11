@@ -3,6 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import "./models/user.js";
+import "./models/post.js";
 import router from "./router.js";
 
 // Connecting to Mongo DB

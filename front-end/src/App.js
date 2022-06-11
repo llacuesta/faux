@@ -6,11 +6,13 @@ import Login from "./pages/Login";
 function App() {
     return (
         <div className="App">
-            <BrowserRouter>
-                <Route exact={true} path="/sign-up" component={Signup} />
-                <Route exact={true} path="/log-in" component={Login} />
-                <Route exact={true} path="/feed" component={Feed} />
-            </BrowserRouter>
+            <div className="wrapper">
+                <BrowserRouter>
+                    <Route exact={true} path="/sign-up" component={Signup} />
+                    <Route exact={true} path="/log-in" component={Login} />
+                    <Route exact={true} path="/feed" component={Feed} />
+                </BrowserRouter>
+            </div>
         </div>
     );
 }

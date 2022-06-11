@@ -1,5 +1,5 @@
 // Imports
-import { signUp, login, checkIfLoggedIn } from "./controller.js";
+import { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser } from "./controller.js";
 
 const router = (app) => {
     app.post("/sign-up", signUp);
@@ -18,6 +18,9 @@ const router = (app) => {
             - adding friends (edit user to include friends)
             - confirm friends 
     */
+
+    app.post("/create-post", createPost);
+    app.post("/get-all-user-posts", getAllPostsByUser)
 }
 
 export default router;

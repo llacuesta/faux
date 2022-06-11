@@ -1,6 +1,6 @@
 import React from "react";
-import Input from "./components/Input.js";
 import Cookies from "universal-cookie";
+import Welcome from "./components/Welcome";
 
 class Login extends React.Component {
 
@@ -42,33 +42,36 @@ class Login extends React.Component {
                         sameSite: "lax"
                     }
                 );
-                localStorage.setItem("username", body.username);
-                this.props.history.push("/feed")
+                localStorage.setItem("fname", body.fname);
+                localStorage.setItem("lname", body.lname);
+                localStorage.setItem("id", body.id);
+                this.props.history.push("/feed");
             }
         })
     }
 
     render() {
         return (
-            <div>
-                <h1>Log In</h1>
-                <form>
-                    <Input
-                        id="l-email"
-                        label="Email"
-                        type="email"
-                    />
-                    <Input
-                        id="l-pword"
-                        label="Password"
-                        type="password"
-                    />
-                    <button onClick={this.login}>Log In</button>
-                </form>
+            <div className="banner">
+                <Welcome />
+                <div className="form">
+                    <h1>Log In</h1>
+                    <form>
+                        <div className="input">
+                            <label htmlFor="l-email">Email</label>
+                            <input id="l-email" type="email" />
+                        </div>
+                        <div className="input">
+                            <label htmlFor="l-pword">Password</label>
+                            <input id="l-pword" type="password" />
+                        </div>
+                        <button onClick={this.login}>Log In</button>
+                    </form>
 
-                <p>
-                    <a href="/sign-up">Sign Up</a> for an account
-                </p>
+                    <p>
+                        <a href="/sign-up">Sign Up</a> for an account
+                    </p>
+                </div>
             </div>
         )
     }

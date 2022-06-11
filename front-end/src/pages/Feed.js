@@ -1,6 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import CreatePost from "./components/CreatePost";
+// import CreatePost from "./components/CreatePost";
+import Header from "./components/Header";
+import Post from "./components/Post";
+import User from "./components/User";
 // import Cookies from "universal-cookie";
 
 class Feed extends React.Component {
@@ -9,28 +12,44 @@ class Feed extends React.Component {
         super(props);
 
         this.state = {
+            posts: [],
             checkedIfLoggedIn: false,
             isLoggedIn: null,
-            user: localStorage.getItem("username")
+            user: {
+                fname: localStorage.getItem("fname"),
+                lname: localStorage.getItem("lname"),
+            },
+            id: localStorage.getItem("id")
         }
     }
 
     componentDidMount() {
-        fetch(
-            "http://localhost:3001/check-if-logged-in",
-            {
+        Promise.all([
+            fetch("http://localhost:3001/check-if-logged-in", {
                 method: "POST",
                 credentials: "include"
-            }
-        )
-        .then(response => response.json())
-        .then(body => {
-            if (body.isLoggedIn) {
-                console.log(this.state)
+            }), 
+            fetch("http://localhost:3001/get-all-user-posts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: this.state.id })
+            })
+        ])
+        .then(([res1, res2]) => {
+            return Promise.all([res1.json(), res2.json()])
+        })
+        .then(([body1, body2]) => {
+            if (body1.isLoggedIn) {
                 this.setState({ 
                     checkedIfLoggedIn: true,
                     isLoggedIn: true,
-                    user: localStorage.getItem("username")
+                    user: {
+                        fname: localStorage.getItem("fname"),
+                        lname: localStorage.getItem("lname"),
+                    },
+                    id: localStorage.getItem("id")
                  });
             } else {
                 this.setState({
@@ -38,7 +57,13 @@ class Feed extends React.Component {
                     isLoggedIn: false
                 });
             }
-        });
+
+            if (body2.success) {
+                this.setState({
+                    posts: body2.posts
+                })
+            }
+        })
     }
 
     render() {
@@ -50,8 +75,17 @@ class Feed extends React.Component {
             if (this.state.isLoggedIn) {
                 return (
                     <div>
-                        Welcome to Feed, {this.state.user}
-                        <CreatePost />
+                        <Header />
+                        <div className="main">
+                            <div className="feed">
+                                {/* <CreatePost author={this.state.id}/> */}
+                                <Post data={this.state.posts}/>
+                            </div>
+                            <div className="user">
+                                
+                                <User fname={this.state.user.fname} lname={this.state.user.lname} />
+                            </div>
+                        </div>
                     </div>
                 )
             } else {

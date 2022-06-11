@@ -1,0 +1,261 @@
+/*
+    FONT
+*/
+@import url('https://fonts.googleapis.com/css2?family=Joan&family=Rubik:wght@300;400&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    background-size: cover;
+    height: 650px;
+    color: #171717;
+    background-color: #EEF0ED;
+}
+
+.wrapper {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    margin-top: 0px;
+}
+
+/*
+    HEADER
+*/
+.header {
+    height: 60px;
+    width: 100%;
+    background-color: #171717;
+    color: #EEF0ED;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Joan', serif;
+    font-size: 40px;
+    font-style: italic;
+    margin-left: -168px;
+}
+
+/*
+    WELCOME
+*/
+.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Joan', serif;
+    background-color: #171717;
+    color: #EEF0ED;
+    height: 600px;
+}
+
+.welcome h1 {
+    margin: 0px;
+    font-size: 70px;
+    line-height: 120px;
+}
+
+.welcome .title {
+    margin: 0px;
+    font-style: italic;
+    font-size: 150px;
+}
+
+.welcome .subtitle {
+    font-size: 30px;
+}
+
+/*
+   LOG IN AND SIGN UP BANNER
+*/
+.banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+}
+
+.banner .form {
+    background: rgba(255, 255, 255, 0.80);
+    font-family: 'Rubik', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.banner .form .input {
+	margin-bottom:  15px;
+    display: flex;
+    align-items: center;
+}
+
+.banner .form .input label {
+    width: 200px;
+    color: #1b1a1a;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.banner .form .input input {
+	width: 100%;
+    outline: none;
+    border: 1px solid #EEF0ED;
+    font-size: 15px;
+	font-family: 'Rubik', sans-serif;
+    padding: 8px 10px;
+}
+
+.banner .form .input input:focus {
+	border: 1px solid #171717;
+}
+
+.banner .form button {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 15px;
+	font-family: 'Rubik', sans-serif;
+    border: 1px solid #171717;
+    background-color: #EEF0ED;
+}
+
+.banner .form button:hover {
+    background-color: #171717;
+    color: #EEF0ED;
+}
+
+.banner .form .error p {
+    color: red;
+    display: flex;
+    justify-content: center;
+}
+
+.banner .form p {
+    font-size: 15px;
+}
+
+.banner .form h1 {
+    font-family: 'Joan', serif;
+    text-transform: lowercase;
+    font-size: 50px;
+    margin-top: 0px;
+}
+
+.banner .form a {
+    color: #171717;
+    margin: auto;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.banner .form a:hover {
+    text-decoration: underline;
+}
+
+/*
+    FEED
+*/
+.main {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 20px;
+    padding-top: 80px;
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.feed .new-post {
+    background-color: white;
+    display: grid;
+    padding: 10px;
+}
+
+.feed .new-post h1 {
+    margin: 0px;
+    font-size: 15px;
+    font-family: 'Rubik', sans-serif;
+    padding-bottom: 10px;
+}
+
+.feed .new-post .fields {
+    display: flex;
+}
+
+.feed .new-post textarea {
+    margin-top: 5px;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+    height: 100px;
+    width: 500px;
+    font-size: 25px;
+    font-family: 'Rubik', sans-serif;
+    padding: 10px;
+    border: none;
+    border-top: 2px solid #171717;
+    border-bottom: 2px solid #171717;
+}
+
+.feed .new-post button {
+    height: 100px;
+    width: 100%;
+    margin-top: 5px;
+	font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+    border: none;
+    border-top: 2px solid #171717;
+    border-bottom: 2px solid #171717;
+    background-color: white;
+}
+
+.feed .new-post button:hover {
+    background-color: #171717;
+    color: #EEF0ED;
+    border: none;
+    border-top: 2px solid #171717;
+    border-bottom: 2px solid #171717;
+}
+
+/*
+    POSTS
+*/
+.posts .post {
+    margin-bottom: 20px;
+    font-family: 'Rubik', sans-serif;
+}
+
+.post {
+    background-color: white;
+    padding: 15px;
+}
+
+.post .title a {
+    font-size: 17px;
+    color: #171717;
+    text-decoration: none;
+}
+
+.post .title a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.post .title p {
+    font-size: 13px;
+    font-weight: 300;
+    text-transform: capitalize;
+    margin-top: 3px;
+}
+
+.post .content {
+    font-size: 15px;
+}
+
+/*
+    USER
+*/
+.user {
+    font-family: 'Rubik', sans-serif;
+}

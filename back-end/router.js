@@ -1,5 +1,5 @@
 // Imports
-import { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo } from "./controller.js";
+import { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo, deletePost, editPost } from "./controller.js";
 
 const router = (app) => {
     app.post("/sign-up", signUp);
@@ -9,7 +9,6 @@ const router = (app) => {
     /*
         TODO: add routers for
             - editing post
-            - deleting post
     */
    /*
     *   TODO: routers
@@ -21,6 +20,8 @@ const router = (app) => {
     app.post("/get-all-user-posts", getAllPostsByUser);
     app.post("/search-users", searchUsers);
     app.post("/get-user", getUserInfo);
+    app.post("/edit-post", editPost)
+    app.post("/delete-post", deletePost);
 }
 
 export default router;

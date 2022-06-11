@@ -115,6 +115,7 @@ const getAllPostsByUser = (req, res) => {
                     let allPosts = []
                     posts.forEach(post => {
                         let postCopy = {
+                            postid: post._id,
                             authorid: user._id,
                             author: user.fname + " " + user.lname,
                             date: post.date.toDateString().substr(4, 6),
@@ -168,4 +169,25 @@ const getUserInfo = (req, res) => {
     })
 }
 
-export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo }
+const editPost = (req, res) => {
+    console.log(req.body)
+    Post.findByIdAndUpdate(req.body.id, { caption: req.body.newCaption, is_edited: true, date: Date.now() }, (err, post) => {
+        if (err || !post) {
+            return res.send({ success: false });
+        } else {
+            return res.send({ success: true, edited: post })
+        }
+    })
+}
+
+const deletePost = (req, res) => {
+    Post.findByIdAndRemove(req.body.id, (err, post) => {
+        if (err || !post) {
+            return res.send({ success: false });
+        } else {
+            return res.send({ success: true, deleted: post })
+        }
+    })
+}
+
+export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo, editPost, deletePost }

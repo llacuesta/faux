@@ -237,7 +237,6 @@ body {
     border: 1px solid #DBDBDB;
     background-color: white;
     padding: 15px;
-
 }
 
 .post .head {
@@ -255,6 +254,7 @@ body {
 
 .post .title {
     padding-top: 2px;
+    width: 334px;
 }
 
 .post .title a {
@@ -277,6 +277,49 @@ body {
 
 .post .content {
     font-size: 15px;
+}
+
+/*
+    POSTS OPTIONS
+*/
+.post .options button, .post .edit-input button {
+	font-family: 'Rubik', sans-serif;
+    border: 1px solid #DBDBDB;
+    background-color: white;
+}
+
+.post .options button:hover, .post .edit-input button:hover {
+    background-color: #171717;
+    border: 1px solid #171717;
+    color: #FAFAFA;
+}
+
+.post .edit-input button {
+    font-family: 'Rubik', sans-serif;
+    width: 45px;
+}
+
+.post .options .edit {
+    border-right: none;
+}
+
+.post .options .edit:hover {
+    border-right: none;
+}
+
+.post .edit-input {
+    display: flex;
+    width: 100%;
+}
+
+.post .edit-input input {
+    width: 100%;
+    height: 35px;
+    outline: none;
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+    border: 1px solid #DBDBDB;
+    padding-left: 10px;
 }
 
 /*

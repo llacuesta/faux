@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import CreatePost from "./components/CreatePost";
 import Header from "./components/Header";
-import Post from "./components/Post";
+import Posts from "./components/Posts";
 import SearchBar from "./components/SearchBar";
 import UserInfo from "./components/UserInfo";
 // import Cookies from "universal-cookie";
@@ -80,7 +80,7 @@ class Feed extends React.Component {
                         <div className="main">
                             <div className="feed">
                                 <CreatePost author={this.state.id}/>
-                                <Post data={this.state.posts}/>
+                                <Posts user={this.state.id} data={this.state.posts}/>
                             </div>
                             <div className="user">
                                 <SearchBar />

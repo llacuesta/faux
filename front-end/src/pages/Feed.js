@@ -2,10 +2,12 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import CreatePost from "./components/CreatePost";
 import FriendRequests from "./components/FriendRequests";
+import Friends from "./components/Friends";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
 import SearchBar from "./components/SearchBar";
 import UserInfo from "./components/UserInfo";
+import Cookies from "universal-cookie";
 
 class Feed extends React.Component {
 
@@ -22,6 +24,23 @@ class Feed extends React.Component {
             },
             id: localStorage.getItem("id")
         }
+
+        this.logout = this.logout.bind(this);
+    }
+
+    logout(e) {
+        e.preventDefault();
+
+        const cookies = new Cookies();
+        cookies.remove("authToken");
+
+        localStorage.removeItem("fname");
+        localStorage.removeItem("lname");
+        localStorage.removeItem("id");
+
+        this.setState({
+            isLoggedIn: false
+        })
     }
 
     componentDidMount() {
@@ -30,7 +49,7 @@ class Feed extends React.Component {
                 method: "POST",
                 credentials: "include"
             }), 
-            fetch("http://localhost:3001/get-all-user-posts", {
+            fetch("http://localhost:3001/get-feed", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -84,8 +103,12 @@ class Feed extends React.Component {
                             </div>
                             <div className="user">
                                 <SearchBar />
-                                <UserInfo id={this.state.id} fname={this.state.user.fname} lname={this.state.user.lname} />
+                                <div className="logout">
+                                    <UserInfo id={this.state.id} fname={this.state.user.fname} lname={this.state.user.lname} />
+                                    <button onClick={this.logout}>Log Out</button>
+                                </div>
                                 <FriendRequests user={this.state.id}/>
+                                <Friends user={this.state.id}/>
                             </div>
                         </div>
                     </div>

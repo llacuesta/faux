@@ -216,7 +216,7 @@ body {
     background-color: white;
 }
 
-.feed .new-post button:hover {
+.feed .new-post button:hover:not([disabled]) {
     background-color: #171717;
     color: #FAFAFA;
     border: none;
@@ -230,7 +230,7 @@ body {
     margin-top: 0px;
 }
 
-.friend-requests > p {
+.friend-requests > p, .friends-list > p {
     font-family: 'Rubik', sans-serif;
     font-size: 20px;
 }
@@ -419,7 +419,7 @@ body {
     margin: 0px;
 }
 
-.add-friend button {
+.add-friend button, .logout > button {
     width: 100%;
     padding: 8px 10px;
     font-size: 15px;
@@ -428,9 +428,13 @@ body {
     background-color: #FAFAFA;
 }
 
-.add-friend button:hover:not([disabled]) {
+.add-friend button:hover:not([disabled]), .logout > button:hover {
     background-color: #171717;
     color: #FAFAFA;
+}
+
+.logout button {
+    margin-top: 10px;
 }
 
 /*

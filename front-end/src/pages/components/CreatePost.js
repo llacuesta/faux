@@ -6,7 +6,16 @@ class CreatePost extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            textarea: ""
+        }
+
         this.createPost = this.createPost.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
+    }
+
+    changeHandler(e) {
+        this.setState({ textarea: e.target.value })
     }
 
     createPost(e, authorID) {
@@ -39,9 +48,9 @@ class CreatePost extends Component {
                 <p>Create Post</p>
                 <div className="fields">
                     <form>
-                        <textarea id="caption" placeholder="Post something..."/>
+                        <textarea id="caption" placeholder="Post something..." onChange={this.changeHandler}/>
                     </form>
-                    <button onClick={(e) => this.createPost(e, this.props.author)}>&gt;</button>
+                    <button disabled={!this.state.textarea} onClick={(e) => this.createPost(e, this.props.author)}>&gt;</button>
                 </div>
             </div>
         );

@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Posts from './components/Posts';
 import { Redirect } from 'react-router-dom';
 import pfp from "./components/assets/default-pfp.png"
+import Friends from './components/Friends';
 
 class User extends Component {
 
@@ -153,6 +154,7 @@ class User extends Component {
                                     <h1>Your Posts</h1>
                                     <Posts user={this.state.currentID} data={this.state.posts}/>
                                 </div>
+                                <Friends user={this.state.currentID}/>
                             </div>
                         </div>
                     )
@@ -172,6 +174,7 @@ class User extends Component {
                                 </div>
                                 <div className="add-friend">
                                     {!this.state.friendRequest.requested ? <button onClick={this.addFriend}>Add Friend</button> : (this.state.friendRequest.status === 1 ? <button disabled={true}>Request Sent</button> : <button disabled={true}>Already Friends</button>)}
+                                    <Friends user={this.state.query}/>
                                 </div>
                             </div>
                         </div>

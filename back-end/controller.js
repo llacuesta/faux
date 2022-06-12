@@ -110,39 +110,54 @@ const createPost = (req, res) => {
     })
 }
 
-// const getFeedPosts = (req, res) => {
-//     User.findById(req.body.id, (err, user) => {
-//         if (err) {
-//             return res.send({ success: false });
-//         } else {
-//             let ids = [req.body.id];
-//             user.friends.forEach(friend => {
-//                 ids.push(friend)
-//             })
-//             let query = ""
-//             for (let i = 0; i < ids.length + 2; i++) {
-//                 if (i == 0) {
-//                     query += "{ $or: [{ author: "
-//                 } else if (i == ids.length + 1) {
-//                     query += ids[i] + " }] }"
-//                 } else {
-//                     query += ids[i] + " }, { author: "
-//                 }
-//             }
-//             Post.find(query).sort({ date: -1 }, (err, posts) => {
-//                 if (err) {
-//                     return res.send({ success: false });
-//                 } else {
-//                     return res.send({ success: true, posts: posts })
-//                 }
-//             })
-//         }
-//     })
-// }
+const getFeedPosts = (req, res) => {
+    User.findById(req.body.id, (err, user) => {
+        if (err || !user) {
+            return res.send({ success: false });
+        } else {
+            let ids = [mongoose.Types.ObjectId(req.body.id)];
+            user.friends.forEach(friend => {
+                ids.push(friend)
+            })
+            let query = {
+                $or: []
+            }
+            for (let id of ids) {
+                let auth = {
+                    author: id
+                }
+                query.$or.push(auth)
+            }
+            Post.aggregate([
+                { $match: query }, 
+                { $lookup: { from: "users", localField: "author", foreignField: "_id", as: "author_info" } }
+            ]).sort({ date: -1 }).exec((err, posts) => {
+                if (err) {
+                    console.log(err)
+                    return res.send({ success: false });
+                } else {
+                    let allPosts = []
+                    posts.forEach(post => {
+                        let postCopy = {
+                            postid: post._id,
+                            authorid: post.author.toString(),
+                            author: post.author_info[0].fname + " " +  post.author_info[0].lname,
+                            date: post.date.toDateString().substr(4, 6),
+                            caption: post.caption,
+                            is_edited: post.is_edited
+                        }
+                        allPosts.push(postCopy);
+                    })
+                    return res.send({ success: true, posts: allPosts });
+                }
+            })
+        }
+    })
+}
 
 const getAllPostsByUser = (req, res) => {
     User.findById(req.body.id, (err, user) => {
-        if (err) {
+        if (err || !user) {
             return res.send({ success: false });
         } else {
             Post.find({ author: req.body.id }, (err, posts) => {
@@ -308,4 +323,24 @@ const rejectRequest = (req, res) => {
     })
 }
 
-export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo, editPost, deletePost, isRequestSent, sendRequest, getRequests, acceptRequest, rejectRequest }
+const getFriends = (req, res) => {
+    User.aggregate([{ $match : { _id: mongoose.Types.ObjectId(req.body.id) } }, { $lookup: { from: "users", localField: "friends", foreignField: "_id", as: "friends_info" } }], (err, user) => {
+        if (err || !user) {
+            return res.send({ success: false });
+        } else {
+            let result = []
+            user[0].friends_info.forEach(friend => {
+                let friendCopy = {
+                    id: friend._id,
+                    fname: friend.fname,
+                    lname: friend.lname
+                }
+                result.push(friendCopy)
+            })
+            console.log(result)
+            return res.send({ success: true, friends: result });
+        }
+    })
+}
+
+export { signUp, login, checkIfLoggedIn, createPost, getFeedPosts, getAllPostsByUser, searchUsers, getUserInfo, editPost, deletePost, isRequestSent, sendRequest, getRequests, acceptRequest, rejectRequest, getFriends }

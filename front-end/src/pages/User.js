@@ -151,7 +151,7 @@ class User extends Component {
                                 </div>
                                 <div className="feed">
                                     <h1>Your Posts</h1>
-                                    <Posts user={this.state.query} data={this.state.posts}/>
+                                    <Posts user={this.state.currentID} data={this.state.posts}/>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@ class User extends Component {
                                 </div>
                                 <div className="feed">
                                     <h1>User Posts</h1>
-                                    <Posts user={this.state.query} data={this.state.posts}/>
+                                    <Posts user={this.state.currentID} data={this.state.posts}/>
                                 </div>
                                 <div className="add-friend">
                                     {!this.state.friendRequest.requested ? <button onClick={this.addFriend}>Add Friend</button> : (this.state.friendRequest.status === 1 ? <button disabled={true}>Request Sent</button> : <button disabled={true}>Already Friends</button>)}

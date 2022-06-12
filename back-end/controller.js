@@ -95,14 +95,50 @@ const createPost = (req, res) => {
         caption: req.body.caption
     });
 
-    newPost.save((err) => {
+    newPost.save((err, post) => {
         if (err) {
             return res.send({ success: false });
         } else {
-            return res.send({ success: true });
+            User.findByIdAndUpdate(newPost.author, { $push: { posts: post._id } }, (err) => {
+                if (err) {
+                    return res.send({ success: false });
+                } else {
+                    return res.send({ success: true });
+                }
+            })
         }
     })
 }
+
+// const getFeedPosts = (req, res) => {
+//     User.findById(req.body.id, (err, user) => {
+//         if (err) {
+//             return res.send({ success: false });
+//         } else {
+//             let ids = [req.body.id];
+//             user.friends.forEach(friend => {
+//                 ids.push(friend)
+//             })
+//             let query = ""
+//             for (let i = 0; i < ids.length + 2; i++) {
+//                 if (i == 0) {
+//                     query += "{ $or: [{ author: "
+//                 } else if (i == ids.length + 1) {
+//                     query += ids[i] + " }] }"
+//                 } else {
+//                     query += ids[i] + " }, { author: "
+//                 }
+//             }
+//             Post.find(query).sort({ date: -1 }, (err, posts) => {
+//                 if (err) {
+//                     return res.send({ success: false });
+//                 } else {
+//                     return res.send({ success: true, posts: posts })
+//                 }
+//             })
+//         }
+//     })
+// }
 
 const getAllPostsByUser = (req, res) => {
     User.findById(req.body.id, (err, user) => {
@@ -185,7 +221,13 @@ const deletePost = (req, res) => {
         if (err || !post) {
             return res.send({ success: false });
         } else {
-            return res.send({ success: true, deleted: post })
+            User.findByIdAndUpdate(req.body.author, { $pull: { posts: req.body.id } }, (err) => {
+                if (err) {
+                    return res.send({ success: false })
+                } else {
+                    return res.send({ success: true, deleted: post })
+                }
+            })
         }
     })
 }

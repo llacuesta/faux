@@ -6,6 +6,7 @@ const router = (app) => {
     app.post("/log-in", login);
     app.post("/check-if-logged-in", checkIfLoggedIn);
     app.post("/create-post", createPost);
+    // app.post("/get-feed", getFeedPosts);
     app.post("/get-all-user-posts", getAllPostsByUser);
     app.post("/search-users", searchUsers);
     app.post("/get-user", getUserInfo);

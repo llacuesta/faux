@@ -50,7 +50,7 @@ class Post extends Component {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ id: postID })
+                body: JSON.stringify({ id: postID, author: this.props.post.authorid })
             }
         )
         .then(response => response.json())
@@ -71,7 +71,7 @@ class Post extends Component {
                         <img src={pfp} alt="profile-pic"></img>
                         <div className="title">
                             <a href={"/user?id=" + this.props.post.authorid}>{ this.props.post.author }</a> <br />
-                            <p>{ this.props.post.date }</p>
+                            <p>{ this.props.post.is_edited ? "EDITED • " + this.props.post.date : this.props.post.date }</p>
                         </div>
                         { this.props.user === this.props.post.authorid ? <div className="options"><button className="edit" onClick={() => { this.setState({ editing: true }) }}>e</button><button className="delete" onClick={(e) => this.deletePost(e, this.props.post.postid)}>d</button></div> : <div></div> }
                     </div>

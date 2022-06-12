@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 const User = mongoose.model("User");
 const Post = mongoose.model("Post");
+const FriendRequest = mongoose.model("FriendRequest");
 
 // Endpoints
 const signUp = (req, res) => {
@@ -141,7 +142,6 @@ const searchUsers = (req, res) => {
         } else {
             let result = []
             users.forEach(user => {
-                console.log(user)
                 let userCopy = {
                     id: user._id,
                     fname: user.fname,
@@ -190,4 +190,80 @@ const deletePost = (req, res) => {
     })
 }
 
-export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo, editPost, deletePost }
+const isRequestSent = (req, res) => {
+    FriendRequest.findOne({ $or: [
+        { requester: req.body.requester, recipient: req.body.recipient },
+        { requester: req.body.recipient, recipient: req.body.requester }
+    ] }, (err, request) => {
+        if (err) {
+            return res.send({ success: false });
+        } else if (!request) {
+            return res.send({ success: true, requested: false, status: null });
+        } else {
+            return res.send({ success: true, requested: true, status: request.status });
+        }
+    })
+}
+
+const sendRequest = (req, res) => {
+    const newRequest = new FriendRequest({
+        requester: req.body.requester,
+        recipient: req.body.recipient
+    });
+
+    newRequest.save((err) => {
+        if (err) {
+            return res.send({ success: false });
+        } else {
+            return res.send({ success: true, status: 1 });
+        }
+    })
+}
+
+const getRequests = (req, res) => {
+    const searchID = mongoose.Types.ObjectId(req.body.id)
+    FriendRequest.aggregate([{ $match: { recipient: searchID, status: 1 } }, { $lookup: { from: "users", localField: "requester", foreignField: "_id", as: "requester_info" } }] ,(err, requests) => {
+        if (err) {
+            return res.send({ success: false });
+        } else {
+            let users = []
+            requests.forEach(request => {
+                let user = {
+                    id: request.requester_info[0]._id,
+                    fname: request.requester_info[0].fname,
+                    lname: request.requester_info[0].lname,
+                }
+                users.push(user)
+            })
+            return res.send({ success: true, requests: users });
+        }
+    })
+}
+
+const acceptRequest = (req, res) => {
+    FriendRequest.findOneAndUpdate({ requester: mongoose.Types.ObjectId(req.body.requester), recipient: mongoose.Types.ObjectId(req.body.recipient) }, { status: 2 }, (err, request) => {
+        if (err || !request) {
+            return res.send({ success: false });
+        } else {
+            User.findByIdAndUpdate(req.body.recipient, { $push: { friends: mongoose.Types.ObjectId(req.body.requester) } }, (err) => {
+                if (err) { return res.send({ success: false }); }
+            })
+            User.findByIdAndUpdate(req.body.requester, { $push: { friends: mongoose.Types.ObjectId(req.body.recipient) } }, (err) => {
+                if (err) { return res.send({ success: false }); }
+            })
+            return res.send({ success: true });
+        }
+    })
+}
+
+const rejectRequest = (req, res) => {
+    FriendRequest.findOneAndDelete({ requester: mongoose.Types.ObjectId(req.body.requester), recipient: mongoose.Types.ObjectId(req.body.recipient) }, (err, request) => {
+        if (err || !request) {
+            return res.send({ success: false });
+        } else {
+            return res.send({ success: true });
+        }
+    })
+}
+
+export { signUp, login, checkIfLoggedIn, createPost, getAllPostsByUser, searchUsers, getUserInfo, editPost, deletePost, isRequestSent, sendRequest, getRequests, acceptRequest, rejectRequest }

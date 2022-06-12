@@ -32,7 +32,7 @@ class Post extends Component {
             if (!body.success) {
                 alert("Failed to edit post")
             } else {
-                alert("Post edited!")
+                window.location.reload()
             }
         })
 
@@ -58,7 +58,7 @@ class Post extends Component {
             if (!body.success) {
                 alert("Failed to delete post")
             } else {
-                alert("Post deleted!")
+                window.location.reload()
             }
         })
     }

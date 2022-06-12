@@ -29,7 +29,7 @@ class CreatePost extends Component {
         .then(response => response.json())
         .then(body => {
             if (!body.success) { alert("Failed to create post"); }
-            else { alert("Post created!"); }
+            else { window.location.reload() }
         })
     }
 

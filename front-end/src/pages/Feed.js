@@ -1,11 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import CreatePost from "./components/CreatePost";
+import FriendRequests from "./components/FriendRequests";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
 import SearchBar from "./components/SearchBar";
 import UserInfo from "./components/UserInfo";
-// import Cookies from "universal-cookie";
 
 class Feed extends React.Component {
 
@@ -85,6 +85,7 @@ class Feed extends React.Component {
                             <div className="user">
                                 <SearchBar />
                                 <UserInfo id={this.state.id} fname={this.state.user.fname} lname={this.state.user.lname} />
+                                <FriendRequests user={this.state.id}/>
                             </div>
                         </div>
                     </div>

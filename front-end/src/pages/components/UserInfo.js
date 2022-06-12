@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import pfp from "./assets/default-pfp.png";
 
-class User extends Component {
+class UserInfo extends Component {
     render() {
         return (
             <div className="info">
@@ -12,4 +12,4 @@ class User extends Component {
     }
 }
 
-export default User;
+export default UserInfo;
